@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>STFGAMES - Puzzle Simplified Version</title>
+    <style>
+        .thumb {
+            width: 200px;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+
+        <h1 style="padding-top: 40px;">El juego de la memoria</h1>
+
+        <div style="padding-top: 15px;"></div>
+
+        <div>
+            <h4>Total de imagenes: <span id = "numImages"></span></h4>
+        </div>
+
+        <form id="formImage" enctype="multipart/form-data">
+            <div>
+                <label for="fileInput"></label>
+                <input  type='file' id="fileInput" name="fileInput" accept="image/png"  />
+            </div>
+            <button type="submit" class="btn btn-success" > Agregar</button>
+        </form>
+
+
+        <div style="padding-top: 30px;"></div>
+
+        <div id="show">
+
+        </div>
+
+        <div id="tablero"></div>
+
+</div>
+<script>
+
+    $(document).ready(function() {
+        $("#formImage").submit(function (e) {
+            e.preventDefault();
+
+            var img = $("inputFile");
+            //var dataImg = img.files[0];
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                dataType: false,
+                url: '/guardarImagen',
+                data: img,
+                timeout: 10000,
+                async: false,
+
+            }).done(function (data) {
+                console.log(data)
+            }).fail(function (err) {
+                console.log(err)
+            });
+        });
+    });
+
+</script>
+<script>
+
+    function loadImagenes() {
+        $.get('/listImagenes');
+
+        fetch('/listImagenes')
+            .then(response => response.json())
+            .then(images => {
+                images.forEach(message => showImage(image));
+            })
+            .catch(error => console.error('Error al cargar imágenes:', error));
+    }
+
+    function showImage(image) {
+
+    }
+
+</script>
+
+<
+</body>
+</html>
