@@ -48,6 +48,28 @@ public class MainController {
         return imagenRepository.findAll();
     }
 
+    public List<Integer> obtenerDimensionesSegunCantImagenes(int cant){
+
+        List<Integer> dimensiones = new ArrayList<>();
+        int filas, columnas;
+        for(int i = 2; i <= cant; i++){
+            if(cant % i == 0){
+                filas = i;
+                columnas = cant/i;
+                if(filas-columnas <=1 && filas-columnas >= -1) {
+                    dimensiones.add(filas);
+                    dimensiones.add(columnas);
+                    return dimensiones;
+                }
+
+                }
+            }
+        return dimensiones;
+        }
+
+
+
+    }
 
 
 
@@ -56,4 +78,4 @@ public class MainController {
 
 
 
-}
+
